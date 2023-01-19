@@ -1,0 +1,27 @@
+version: '3.7'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./src:/maumlab-assignment/src
+    ports:
+      - 4000:4000
+    env_file:
+      - ./.env.docker
+
+  maum-db:
+    # platform: linux/x86_64
+    image: postgres:latest
+    container_name: maum-db
+    restart: always
+    environment:
+      POSTGRES_DATABASE: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      TZ: Asia/Seoul
+
+    ports:
+      - 5432:5432
