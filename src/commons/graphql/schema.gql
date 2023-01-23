@@ -1,0 +1,58 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Questionnaire {
+  id: String!
+  subject: String!
+  description: String!
+  totalPoint: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  deleteddAt: DateTime
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Question {
+  id: String!
+  questionNum: Int!
+  subject: String!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  deleteddAt: DateTime
+  questionnaire: Questionnaire!
+}
+
+type Option {
+  id: String!
+  optionNum: Int!
+  contents: String!
+  score: Int!
+  question: Question!
+}
+
+type Query {
+  fetchAllQuestionnaire: [Questionnaire!]!
+  fetchOneQuestionnaire(questionnaireId: String!): Questionnaire!
+  fetchAllQuestion: [Question!]!
+}
+
+type Mutation {
+  createQuestionnaire(createQuestionnaireInput: CreateQuestionnaireInput!): Questionnaire!
+  updateQuestionnaire(questionnaireId: String!, updateQuestionnaireInput: UpdateQuestionnaireInput!): Questionnaire!
+  deleteQuestionnaire(questionnaireId: String!): Boolean!
+}
+
+input CreateQuestionnaireInput {
+  subject: String!
+  description: String!
+}
+
+input UpdateQuestionnaireInput {
+  subject: String
+  description: String
+}
