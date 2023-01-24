@@ -6,10 +6,10 @@ type Questionnaire {
   id: String!
   subject: String!
   description: String!
-  totalPoint: Int!
   createdAt: DateTime!
   updatedAt: DateTime
   deleteddAt: DateTime
+  question: Question!
 }
 
 """
@@ -19,32 +19,85 @@ scalar DateTime
 
 type Question {
   id: String!
-  questionNum: Int!
-  subject: String!
+  contents: String!
   createdAt: DateTime!
   updatedAt: DateTime
-  deleteddAt: DateTime
+  deletedAt: DateTime
   questionnaire: Questionnaire!
+  option: [Option!]
 }
 
 type Option {
   id: String!
   optionNum: Int!
   contents: String!
-  score: Int!
+  score: Int
+  createdAt: DateTime!
+  updatedAt: DateTime
+  deletedAt: DateTime
   question: Question!
+}
+
+type User {
+  id: String!
+  email: String!
+  name: String!
+  submitQestionnaire: SubmitQuestionnaire
+}
+
+type SubmitQuestionnaire {
+  id: String!
+  totalPoint: Int!
+  isSubmitted: Boolean!
+  questionnaire: Questionnaire!
+  user: User!
+}
+
+type Answer {
+  id: String!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  deletedAt: DateTime
+  questionnaire: Questionnaire!
+  question: Question!
+  option: Option!
+  user: User!
 }
 
 type Query {
   fetchAllQuestionnaire: [Questionnaire!]!
   fetchOneQuestionnaire(questionnaireId: String!): Questionnaire!
   fetchAllQuestion: [Question!]!
+  fetchOneQuestion(questionId: String!): Question!
+  fetchAllOption: [Option!]!
+  fetchOneOption(optionId: String!): Option!
+  fetchAllAnswer: [Answer!]!
+  fetchOneAnswer(answerId: String!): Answer!
+  fetchAllUser: [User!]!
+  fetchOneUser(userId: String!): User!
+  fetchAllSubmitQuestionnaire: [SubmitQuestionnaire!]!
+  fetchOneSubmitQuestionnaire(submintQuestionnaireId: String!): SubmitQuestionnaire!
+  fetchUserSubmitQuestionnaire(userId: String!): [SubmitQuestionnaire!]!
 }
 
 type Mutation {
   createQuestionnaire(createQuestionnaireInput: CreateQuestionnaireInput!): Questionnaire!
   updateQuestionnaire(questionnaireId: String!, updateQuestionnaireInput: UpdateQuestionnaireInput!): Questionnaire!
-  deleteQuestionnaire(questionnaireId: String!): Boolean!
+  softDeleteQuestionnaire(questionnaireId: String!): Boolean!
+  createQuestion(createQuestionInput: CreateQuestionInput!): Question!
+  updateQuestion(questionId: String!, updateQuestionInput: UpdateQuestionInput!): Question!
+  softDeleteQuestion(questionId: String!): Boolean!
+  createOption(createOptionInput: CreateOptionInput!): Option!
+  updateOption(optionId: String!, updateOptionInput: UpdateOptionInput!): Option!
+  softDeleteOption(optionId: String!): Boolean!
+  submitQuestionnaire(userId: String!, questionnaireId: String!): Answer!
+  createAnswer(createAnswerInput: CreateAnswerInput!, userId: String!): Answer!
+  updateAnswer(answerId: String!, updateAnswerInput: UpdateAnswerInput!, userId: String!): Answer!
+  softDeleteAnswer(answerId: String!): Boolean!
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(userId: String!, updateUserInput: UpdateUserInput!): User!
+  softDeleteUser(userId: String!): Boolean!
+  softDeleteSubmitQuestionnaire(submintQuestionnaireId: String!): Boolean!
 }
 
 input CreateQuestionnaireInput {
@@ -55,4 +108,50 @@ input CreateQuestionnaireInput {
 input UpdateQuestionnaireInput {
   subject: String
   description: String
+}
+
+input CreateQuestionInput {
+  questionnaireId: String!
+  contents: String!
+}
+
+input UpdateQuestionInput {
+  questionnaireId: String
+  contents: String
+}
+
+input CreateOptionInput {
+  optionNum: Int!
+  contents: String!
+  score: Int
+  questionId: String!
+}
+
+input UpdateOptionInput {
+  optionNum: Int
+  contents: String
+  score: Int
+  questionId: String
+}
+
+input CreateAnswerInput {
+  questionnaireId: String!
+  choiceQuestionId: String!
+  choiceOptionId: String!
+}
+
+input UpdateAnswerInput {
+  questionnaireId: String
+  choiceQuestionId: String
+  choiceOptionId: String
+}
+
+input CreateUserInput {
+  email: String!
+  name: String!
+}
+
+input UpdateUserInput {
+  email: String
+  name: String
 }

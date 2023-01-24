@@ -1,7 +1,7 @@
 import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { QuestionnaireService } from '../questionnaires/questionnaire.service';
+import { Questionnaire } from '../questionnaires/entities/questionnaire.entity';
 import { Question } from './entities/question.entity';
 
 @Injectable()
@@ -10,33 +10,32 @@ export class QuestionService {
     @InjectRepository(Question)
     private readonly questionRepository: Repository<Question>, //
 
-    private readonly questionnaireService: QuestionnaireService,
+    @InjectRepository(Questionnaire)
+    private readonly questionnaireRepository: Repository<Questionnaire>,
   ) {}
 
   async findAll() {
-    const result = await this.questionRepository.findAndCount();
-
-    return {
-      data: result[0],
-      count: result[1],
-    };
+    return await this.questionRepository.find({
+      relations: ['questionnaire', 'option'],
+    });
   }
 
   async findOne({ questionId }) {
-    const isExist = await this.questionRepository.findOne({
+    const result = await this.questionRepository.findOne({
       where: { id: questionId },
+      relations: ['questionnaire', 'option'],
     });
 
-    if (!isExist) {
+    if (!result) {
       throw new UnprocessableEntityException('존재하지 않는 문항입니다.');
     }
 
-    return isExist;
+    return result;
   }
 
   async create({ createQuestionInput }) {
-    const existQuestionnaire = await this.questionnaireService.findOne({
-      questionnaireId: createQuestionInput.questionnaireId,
+    const existQuestionnaire = await this.questionnaireRepository.findOne({
+      where: { id: createQuestionInput.questionnaireId },
     });
 
     if (!existQuestionnaire) {

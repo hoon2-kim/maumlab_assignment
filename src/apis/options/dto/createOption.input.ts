@@ -1,5 +1,5 @@
 import { Field, InputType, Int } from '@nestjs/graphql';
-import { IsInt, IsString, Max, Min } from 'class-validator';
+import { IsInt, IsOptional, IsString, Max, Min } from 'class-validator';
 
 @InputType()
 export class CreateOptionInput {
@@ -13,6 +13,7 @@ export class CreateOptionInput {
   @Field(() => String)
   contents: string;
 
+  @IsOptional()
   @IsInt()
   @Field(() => Int, { nullable: true })
   score: number;

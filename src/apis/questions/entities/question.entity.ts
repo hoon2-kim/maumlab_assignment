@@ -1,4 +1,5 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
+import { Option } from 'src/apis/options/entities/option.entity';
 import { Questionnaire } from 'src/apis/questionnaires/entities/questionnaire.entity';
 import {
   Column,
@@ -6,6 +7,7 @@ import {
   DeleteDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -18,12 +20,8 @@ export class Question {
   id: string;
 
   @Column()
-  @Field(() => Int)
-  questionNum: number;
-
-  @Column()
   @Field(() => String)
-  subject: string;
+  contents: string;
 
   @CreateDateColumn()
   @Field(() => Date)
@@ -35,9 +33,13 @@ export class Question {
 
   @DeleteDateColumn()
   @Field(() => Date, { nullable: true })
-  deleteddAt: Date;
+  deletedAt: Date;
 
-  @ManyToOne(() => Questionnaire)
+  @ManyToOne(() => Questionnaire, (questionnaire) => questionnaire.question)
   @Field(() => Questionnaire)
   questionnaire: Questionnaire;
+
+  @OneToMany(() => Option, (option) => option.question)
+  @Field(() => [Option], { nullable: true })
+  option: Option[];
 }

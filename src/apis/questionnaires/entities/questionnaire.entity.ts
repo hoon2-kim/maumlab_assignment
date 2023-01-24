@@ -1,9 +1,11 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
+import { Question } from 'src/apis/questions/entities/question.entity';
 import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -23,10 +25,6 @@ export class Questionnaire {
   @Field(() => String)
   description: string;
 
-  @Column({ default: 0 })
-  @Field(() => Int, { defaultValue: 0 })
-  totalPoint: number;
-
   @CreateDateColumn()
   @Field(() => Date)
   createdAt: Date;
@@ -38,4 +36,8 @@ export class Questionnaire {
   @DeleteDateColumn()
   @Field(() => Date, { nullable: true })
   deleteddAt: Date;
+
+  @OneToMany(() => Question, (question) => question.questionnaire)
+  @Field(() => Question)
+  question: Question[];
 }

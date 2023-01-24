@@ -2,7 +2,17 @@ import { Field, ObjectType } from '@nestjs/graphql';
 import { Option } from 'src/apis/options/entities/option.entity';
 import { Questionnaire } from 'src/apis/questionnaires/entities/questionnaire.entity';
 import { Question } from 'src/apis/questions/entities/question.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from 'src/apis/users/entities/user.entity';
+import {
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity()
 @ObjectType()
@@ -11,19 +21,33 @@ export class Answer {
   @Field(() => String)
   id: string;
 
-  @Column({ default: false })
-  @Field(() => Boolean, { defaultValue: false })
-  isCompleted: boolean;
+  @CreateDateColumn()
+  @Field(() => Date)
+  createdAt: Date;
+
+  @UpdateDateColumn({ nullable: true })
+  @Field(() => Date, { nullable: true })
+  updatedAt: Date;
+
+  @DeleteDateColumn({ nullable: true })
+  @Field(() => Date, { nullable: true })
+  deletedAt: Date;
 
   @ManyToOne(() => Questionnaire)
   @Field(() => Questionnaire)
   questionnaire: Questionnaire;
 
-  @ManyToOne(() => Question)
+  @JoinColumn()
+  @OneToOne(() => Question)
   @Field(() => Question)
   question: Question;
 
-  @ManyToOne(() => Option)
+  @JoinColumn()
+  @OneToOne(() => Option)
   @Field(() => Option)
   option: Option;
+
+  @ManyToOne(() => User)
+  @Field(() => User)
+  user: User;
 }
