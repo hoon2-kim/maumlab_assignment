@@ -102,3 +102,8 @@ PG_DATABASE=postgres
 ```bash
 $ docker-compose up --build
 ```
+
+## 아쉬운 점
+- 삭제 로직에 미흡한 점이 있다.
+- logging 처리에 미흡한 점이 있다.
+- 효율적인 코드를 짜지 못하였다.
