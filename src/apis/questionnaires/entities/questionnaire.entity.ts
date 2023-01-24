@@ -38,6 +38,6 @@ export class Questionnaire {
   deleteddAt: Date;
 
   @OneToMany(() => Question, (question) => question.questionnaire)
-  @Field(() => Question)
+  @Field(() => [Question], { nullable: true })
   question: Question[];
 }

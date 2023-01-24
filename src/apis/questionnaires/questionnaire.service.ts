@@ -16,12 +16,15 @@ export class QuestionnaireService {
   private readonly logger = new Logger('QUESTIONNAIRE');
 
   async findAll() {
-    return await this.questionnaireRepository.find();
+    return await this.questionnaireRepository.find({
+      relations: ['question'],
+    });
   }
 
   async findOne({ questionnaireId }) {
     const result = await this.questionnaireRepository.findOne({
       where: { id: questionnaireId },
+      relations: ['question'],
     });
 
     if (!result) {

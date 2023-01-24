@@ -9,7 +9,7 @@ type Questionnaire {
   createdAt: DateTime!
   updatedAt: DateTime
   deleteddAt: DateTime
-  question: Question!
+  question: [Question!]
 }
 
 """
