@@ -1,73 +1,104 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+## 정보
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+### 사용스택
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+- TypeScript
+- NestJS
+- GraphQL
+- TypeORM
+- PostgreSQL
+- Docker
 
-## Description
+### 해당 애플리케이션 설명
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- 중복 선택이 불가능한 설문지
+- 문항 개수에는 제한이 없지만 선택지는 최소 1개 ~ 10개로 제한
+- 선택지의 점수는 수동 설정 가능하며, 수동 설정을 안할 시 선택지의 번호가 점수로 설정됨
 
-## Installation
+## DB
+
+### ERD
+
+![alt text](./img/erd.png)
+
+## API 목록
+
+### User
+
+- fetchAllUser : 모든 유저 조회
+- fetchOneUser : 유저 한명 조회
+- createUser : 유저 생성
+- updateUser : 유저 수정
+- softDeleteUser : 유저 삭제
+
+### SubmitQuestionnaire
+
+- fetchAllSubmitQuestionnaire : 모든 완료된 설문지 조회
+- fetchOneSubmitQuestionnaire : 완료된 설문지 한개 조회
+- fetchUserSubmitQuestionnaire : 해당 유저의 완료한 설문지 조회
+- softDeleteSubmitQuestionnaire : 완료된 설문지 삭제
+
+### Questionnaire
+
+- fetchAllQuestionnaire : 모든 설문지 조회
+- fetchAllQuestionnaire : 설문지 한개 조회
+- createQuestionnaire : 설문지 생성
+- updateQuestionnaire : 설문지 수정
+- softDeleteQuestionnaire : 설문지 삭제
+
+### Question
+
+- fetchAllQuestion : 모든 문항 조회
+- fetchOneQuestion : 문한 한개 조회
+- createQuestion : 문항 생성
+- updateQuestion : 문항 수정
+- softDeleteQuestion : 문항 삭제
+
+### Option
+
+- fetchAllOption : 모든 선택지 조회
+- fetchOneOption : 선택지 한개 조회
+- createOption : 선택지 생성
+- updateOption : 선택지 수정
+- softDeleteOption : 선택지 삭제
+
+### Answer
+
+- fetchAllAnswer : 모든 답변 조회
+- fetchOneAnswer : 답변 한개 조회
+- submitQuestionnaire : 답변 제출(설문지 제출)
+- createAnswer : 답변 생성
+- updateAnswer : 답변 수정
+- softDeleteAnswer : 답변 삭제
+
+## 실행방법
+
+### yarn 설치
 
 ```bash
-$ yarn install
+$ npm install -g yarn
 ```
 
-## Running the app
+### Docker 설치
 
 ```bash
-# development
-$ yarn run start
-
-# watch mode
-$ yarn run start:dev
-
-# production mode
-$ yarn run start:prod
+Docker설치 가이드 : https://docs.docker.com/get-docker/
 ```
 
-## Test
+### .env.docker 파일 생성 및 아래 내용을 넣는다.
 
 ```bash
-# unit tests
-$ yarn run test
+SERVER_PORT=4000
 
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
+PG_HOST=maum-db
+PG_PORT=5432
+PG_USERNAME=postgres
+PG_PASSWORD=postgres
+PG_DATABASE=postgres
 ```
 
-## Support
+## 실행
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+```bash
+$ docker-compose up --build
+```
