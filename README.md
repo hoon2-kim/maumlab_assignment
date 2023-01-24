@@ -100,6 +100,7 @@ PG_DATABASE=postgres
 ## 실행
 
 ```bash
+$ yarn install
 $ docker-compose up --build
 ```
 
