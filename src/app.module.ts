@@ -7,7 +7,7 @@ import { AnswerModule } from './apis/answers/answer.module';
 import { OptionModule } from './apis/options/option.module';
 import { QuestionnaireModule } from './apis/questionnaires/questionnaire.module';
 import { QuestionModule } from './apis/questions/question.module';
-import { SubmitQuestionnaireModule } from './apis/submitQuestionnaires/submintQuestionnaire.service';
+import { SubmitQuestionnaireModule } from './apis/submitQuestionnaires/submintQuestionnaire.module';
 import { UserModule } from './apis/users/user.module';
 
 @Module({

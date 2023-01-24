@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SubmitQuestionnaire } from './entities/submitQuestionnaire.entity';
-import { SubmitQuestionnaireResolver } from './submitQuestionnaire.module';
-import { SubmitQuestionnaireService } from './submitQuestionnaire.resolver';
+import { SubmitQuestionnaireResolver } from './submitQuestionnaire.resolver';
+import { SubmitQuestionnaireService } from './submitQuestionnaire.service';
 
 @Module({
   imports: [
